@@ -32,7 +32,18 @@ class OssSts
     public function __construct($config)
     {
         $this->config = array_merge($this->config, $config);
-        if (!isset($this->config['accessKeyId']) || !isset($this->config['accessKeySecret'])) {
+        if (!isset($this->config['accessKeyId'])
+            ||
+            !isset($this->config['accessKeySecret'])
+            ||
+            !$this->config['roleArn']
+            ||
+            !$this->config['roleSessionName']
+            ||
+            !$this->config['durationSeconds']
+            ||
+            !$this->config['endpoint']
+        ) {
             throw new \Exception('accessKeyId or accessKeySecret is required');
         }
     }
@@ -48,17 +59,19 @@ class OssSts
             'accessKeySecret' => $this->config['accessKeySecret'],
         ]);
         //
-        $config->endpoint = "sts.cn-hangzhou.aliyuncs.com";
+        $config->endpoint = $this->config['endpoint'] ?? "sts.cn-hangzhou.aliyuncs.com";
         $client = new Sts($config);
 
         $assumeRoleRequest = new AssumeRoleRequest([
-            "roleArn" => "acs:ram::1578925264248926:role/ossstsrole",
-            "roleSessionName" => "sessiontest",
-            "durationSeconds" => 3000,
+            "roleArn" => $this->config['roleArn'],
+            "roleSessionName" => $this->config["roleSessionName"]??'default',
+            "durationSeconds" => $this->config['durationSeconds'] ?? 3600,
         ]);
         $runtime = new RuntimeOptions([]);
         $result = $client->assumeRoleWithOptions($assumeRoleRequest, $runtime);
-        return $result->body->credentials->toMap();
+        return array($result->body->credentials->toMap(),[
+
+        ]);
     }
 }
 
