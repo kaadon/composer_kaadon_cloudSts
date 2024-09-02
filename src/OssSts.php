@@ -69,9 +69,9 @@ class OssSts
         ]);
         $runtime = new RuntimeOptions([]);
         $result = $client->assumeRoleWithOptions($assumeRoleRequest, $runtime);
-        return array($result->body->credentials->toMap(),[
-
-        ]);
+        return $result->body->credentials->toMap();
     }
+
+
 }
 
