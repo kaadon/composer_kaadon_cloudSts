@@ -1,0 +1,31 @@
+{
+  "name": "kaadon/cloud-sts",
+  "type": "library",
+  "description": "kaadon cloudSts for PHP",
+  "keywords": [
+    "cloud",
+    "cloudsts",
+    "kaadon"
+  ],
+  "homepage": "http://developer.kaadon.com/",
+  "license": "MIT",
+  "require": {
+    "php": ">=7.4",
+    "alibabacloud/sdk": "^1.8",
+    "alibabacloud/sts-20150401": "^1.1"
+  },
+  "authors": [
+    {
+      "name": "kaadon",
+      "email": "kaadon.com@gmail.com",
+      "homepage": "https://www.kaadon.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Kaadon\\CloudSts\\": "src"
+    }
+  },
+  "extra": {
+  }
+}
